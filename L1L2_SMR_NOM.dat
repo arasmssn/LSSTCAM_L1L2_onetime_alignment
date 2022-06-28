@@ -1,0 +1,22 @@
+# values taken from L1-L2 optical alignment report, p.17 which appear to show best-fit residuals of the scale expected in laser tracker measurements. So maybe the best-fit transformations derived here were just applied to the data captured at BALL?
+# ALL THE DATA IN THIS FILE, DERIVED FROM P.17, APPEAR TO BE TRANSFORMED REPRESENTATIONS OF
+# THE BALL DATA (2560710 & 2535589). QUESTION FOR JUSTIN WOLFE..
+# the items below are a straight translation a subset of the data in BALL SER 2560710. Expected this to be a measurement!
+# L1 SMRs
+# LABEL X Y Z
+SPHERE_3_L1_Cell_SMR3_NOM  720.581  193.058 -126.192
+SPHERE_4_L1_Cell_SMR4_NOM  720.530 -193.094 -126.307
+SPHERE_5_L1_Cell_SMR5_NOM  527.513 -527.491 -126.256
+SPHERE_6_L1_Cell_SMR6_NOM  193.250 -720.580 -126.409
+SPHERE_7_L1_Cell_SMR7_NOM -192.962 -720.091 -126.392
+SPHERE_8_L1_Cell_SMR8_NOM -527.495 -527.566 -126.759
+# L2 SMRs ##### NB - THESE APPARENTLY HAVE A DIFFERENT COORDINATE REFERENCE FROM THE L1 MEASUREMENTS ABOVE..
+# the items below are a straight duplication of a subset of the data in BALL SER 2535589. Expected this to be a measurement!
+SPHERE_3_L2_Cell_SMR3_NOM  633.298  169.191 -28.365
+SPHERE_4_L2_Cell_SMR4_NOM  633.260 -170.575 -28.266
+SPHERE_5_L2_Cell_SMR5_NOM  462.767 -464.534 -28.464
+SPHERE_6_L2_Cell_SMR6_NOM  169.056 -634.120 -28.178
+SPHERE_7_L2_Cell_SMR7_NOM -169.940 -633.669 -28.329
+SPHERE_8_L2_Cell_SMR8_NOM -464.202 -463.861 -28.426
+SPHERE_9_L2_Cell_SMR9_NOM -634.033 -169.362 -28.185
+#
