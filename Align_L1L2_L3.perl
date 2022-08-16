@@ -58,13 +58,19 @@ my $perturb_L1S1={("nom"=>{"dir"=>1},
 				    "tz"  =>+0.120, # this is relative to the fiducial position 
 				    "rx"  =>-0.011*$deg,
 				    "ry"  =>-3.56e-3*$deg)},
-		   "v3.12_RC" => {("dir" => 1,
+		   "v3.12_RC_test" => {("dir" => 1,
 				   "tz"  => +0.091, # relative to fiducial position
 				   "tx"  => +0.037,
 				   "ty"  => +0.120,
 				   "rx"  => -6.115e-3*$deg,
-				   "ry"  => -1.892e-3*$deg,
-		       )})};
+				   "ry"  => -1.892e-3*$deg)},
+		   "v3.12_RC" => {("dir" => 1,
+				   "tz"  => +0.000, # say fiducial position is axisymmetric version in v3.12_RC
+				   "tx"  => +0.007,
+				   "ty"  => -0.022,
+				   "rx"  => -6.68e-3*$deg,
+				   "ry"  => -2.07e-3*$deg)},
+    )};
 
 printf STDERR "READING IN L3 SMR locations data..\n(12 L3 axial mounted SMRs wrt L3 OCF/DATUM A\n plus 12 L3 radial mounted SMRs wrt L3 OCF/DATUM A) .. ";
 open(F,"<","L3_SMR_locations.dat") || die;
@@ -471,10 +477,11 @@ if (1) {
 	    close(SENSMAT);
 	    # now invert/compute the sensitivity matrix etc.
 	    my $A=Math::Matrix->new(@{$SENSMAT});
+	    $A=$A->transpose();
 	    $A->print("A\n");
 	    my $B=$A->inv;
 	    $B->print("B\n");
-	    my $trials=10000;
+	    my $trials=1000000;
 	    my $results = [];
 	    for (my $i=0;$i<$trials;$i++) {
 		my $errs=[[]];
