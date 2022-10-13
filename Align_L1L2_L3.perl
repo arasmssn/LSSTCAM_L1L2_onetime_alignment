@@ -73,7 +73,12 @@ my $perturb_L1S1={("nom"=>{"dir"=>1},
     )};
 
 printf STDERR "READING IN L3 SMR locations data..\n(12 L3 axial mounted SMRs wrt L3 OCF/DATUM A\n plus 12 L3 radial mounted SMRs wrt L3 OCF/DATUM A) .. ";
+
 open(F,"<","L3_SMR_locations.dat") || die;
+
+my ($tooling_ball_size_correction,$tooling_ball_diameter,$smr_nest_cone_incl_angle)=
+    (1,12.000,30*$deg);
+
 while (<F>) {
     next if (!/SPHERE/);
     chomp;
@@ -81,6 +86,21 @@ while (<F>) {
     $data->{$label}={"X"=>$x,
 		     "Y"=>$y,
 		     "Z"=>$z};
+
+    if (($label =~ /MEAS/) && $tooling_ball_size_correction) {
+	my $correction=0.5*(12.700-$tooling_ball_diameter)/cos($smr_nest_cone_incl_angle);
+	my $smr_id=(split("_",$label))[1];
+	if ($smr_id<=12) {
+	    # axial SMR, smr_ix ranges from 1 to 12:
+	    $data->{$label}->{"Z"} += -1*$correction;
+	} else {
+	    # radial SMR, smr_id ranges from 13 to 24.
+	    my $scalar = 1 + $correction/sqrt(pow($data->{$label}->{"X"},2)+
+					      pow($data->{$label}->{"Y"},2));
+	    $data->{$label}->{"X"} *= $scalar;
+	    $data->{$label}->{"Y"} *= $scalar;
+	}
+    }
     push(@labels,$label);
 }
 close(F);
@@ -332,6 +352,15 @@ if (1) {
 		chomp;
 		my ($label,$x,$y,$z)=split(' ',$_);
 		$data->{$label}={"X"=>$x,"Y"=>$y,"Z"=>$z};
+
+		# won't be necessary from now on, this was only for first adjustment influenced by incorrect targets
+
+		my $one_time_kludge=0; 
+		if ($one_time_kludge && $tooling_ball_size_correction) {
+		    my $correction=0.5*(12.700-$tooling_ball_diameter)/cos($smr_nest_cone_incl_angle);
+		    $data->{$label}->{"Z"} -= $correction;
+		}
+
 		push(@sample_labels,$label);
 	    }
 	    close(F);
